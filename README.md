@@ -12,3 +12,5 @@ The R package does the following steps:
 The user can try to recover the known flow-ecology relationships from the simulated survey data using any analysis method.  
 
 Simulations can be repeated many times to calculate type I, II, and III error rates.
+
+See ```./demo/``` for example workflows, starting with ```./demo/eflowsim_example.R```.
