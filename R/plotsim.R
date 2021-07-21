@@ -1,4 +1,12 @@
-plot.eflow_sim <- function(s, simid=NA, type='summary'){
+#' Plot population time-series
+#' @description Plot time-series of population and demographic rates.
+#' @param s list. Simulated population. (see ?eflowsim::sim)
+#' @param simid numeric vector.
+#' @param type character.
+#' @return plot.
+#' @export
+
+plotsim <- function(s, simid=NA, type='summary'){
   
   if(is.na(simid)) {simid <- 1:s$nsim}
   

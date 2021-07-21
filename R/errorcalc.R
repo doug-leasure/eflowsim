@@ -1,3 +1,11 @@
+#' Tabulate error
+#' @description Tabulate error
+#' @param s list. 
+#' @param m list.
+#' @param alpha numeric.
+#' @return data.frame.
+#' @export
+
 errorcalc <- function(s, m, alpha=0.05){
   results <- data.frame(sim=1:s$nsim,
                         k.mean=rep(0,s$nsim), k.base=rep(0,s$nsim), k.high=rep(0,s$nsim), k.var=rep(0,s$nsim), 

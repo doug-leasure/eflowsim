@@ -1,3 +1,9 @@
+#' Plot flow effects
+#' @description Plot flow effects on demographic rates
+#' @param s list. Simulated population. (see ?eflowsim::sim)
+#' @return plot.
+#' @export
+
 ploteffects <- function(s){
   layout(matrix(1:8, nrow=4, ncol=2), heights=c(1.25,1,1,1))
   

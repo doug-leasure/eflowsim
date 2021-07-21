@@ -1,3 +1,11 @@
+#' Plot hydrology time-series
+#' @description Plot time-series of summary statistics for stream hydrology.
+#' @param s list. Simulated population. (see ?eflowsim::sim)
+#' @param simid numeric vector.
+#' @param type character.
+#' @return plot.
+#' @export
+
 plotflow <- function(s, simid=NA, type='summary'){
   
   # Setup Plot

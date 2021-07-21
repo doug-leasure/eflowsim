@@ -1,0 +1,12 @@
+Package: eflowsim
+Version: 0.1.0
+Title: Simulate stream population timeseries
+Author: Doug Leasure
+Maintainer: Doug Leasure <doug.leasure@protonmail.com>
+Description: Simulate stream populations with demographic rates that respond to dynamics of historical stream discharge records.
+Date: 2016-07-21
+Depends: R (>= 3.3.1), dataRetrieval, zoo, boot
+Suggests: multipass
+LazyData: true
+License: unlimited
+RoxygenNote: 7.1.1

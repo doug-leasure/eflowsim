@@ -1,5 +1,24 @@
-# Sample from an eflowsim simulated population time series
-samp <- function(s.dat, nsites=NULL, sitelength.min=100, sitelength.max=100, npass.min=3, npass.max=3, sigmaprop=1, sigmap=1, b0p=0, b1p=0, b2p=0, b3p=0, b4p=0, delta=0){
+#' Population samples
+#' @description Sample from an eflowsim simulated population time series
+#' @param s.dat list. Simulated population. (see ?eflowsim::sim)
+#' @param nsites numeric. Number of sample sites.
+#' @param sitelength.min numeric. Minimum length of a sample site.
+#' @param sitelength.max numeric. Maximum length of a sample site.
+#' @param npass.min numeric. Minimum number of removal sampling passes.
+#' @param npass.max numeric. Maximum number of removal sampling passes.
+#' @param sigmaprop numeric. Standard deviation in proportion of total population extent sampled.
+#' @param sigmap numeric. Standard deviation in first-pass detection probabilities.
+#' @param b0p numeric. Regression intercept for first-pass detection probabilities.
+#' @param b1p numeric. Effect of covariate 1 on first-pass detection probabilities.
+#' @param b2p numeric. Effect of covariate 2 on first-pass detection probabilities.
+#' @param b3p numeric. Effect of covariate 3 on first-pass detection probabilities.
+#' @param b4p numeric. Effect of covariate 4 on first-pass detection probabilities.
+#' @param delta numeric. Exponential rate of decline in sampling probabilities in each subsequent pass.
+#' @return list.
+#' @export
+
+samp <- function(s.dat, nsites=NULL, sitelength.min=100, sitelength.max=100, npass.min=3, npass.max=3, 
+                 sigmaprop=1, sigmap=1, b0p=0, b1p=0, b2p=0, b3p=0, b4p=0, delta=0){
   # s.dat=s1; extent=10; nsites=NULL; sitelength.min=100; sitelength.max=100; npass.min=3; npass.max=3; sigmaprop=0.01; sigmap=0.01; b0p=0; b1p=0; b2p=0; b3p=0; b4p=0; delta=0
   
   attach(s.dat, warn.conflicts=F)
@@ -61,7 +80,7 @@ samp <- function(s.dat, nsites=NULL, sitelength.min=100, sitelength.max=100, npa
         
         # rprop
         for (j in 1:nsites[t]){
-          rprop[t,j] <- inv.logit( rnorm(1, logit(prop[t,j]), sigmaprop) )
+          rprop[t,j] <- boot::inv.logit( rnorm(1, boot::logit(prop[t,j]), sigmaprop) )
         }
         
         if(sum(rprop[t,]) > 1) {
@@ -74,7 +93,7 @@ samp <- function(s.dat, nsites=NULL, sitelength.min=100, sitelength.max=100, npa
 
           ## Regression for detection at pass 1 ##
           mupalpha <- b0p + b1p*covs[s,t,j,1] + b2p*covs[s,t,j,2] + b3p*covs[s,t,j,3] + b4p*covs[s,t,j,4]
-          palpha[t,j] <- inv.logit(dnorm(1, mupalpha, sigmap))
+          palpha[t,j] <- boot::inv.logit(dnorm(1, mupalpha, sigmap))
 
           for (m in 1:npasses[t,j]){
             p[t,j,m] <- min(0.99, max(0.01, palpha[t,j] * exp(-delta * (m - 1)) ))
@@ -122,7 +141,6 @@ samp <- function(s.dat, nsites=NULL, sitelength.min=100, sitelength.max=100, npa
                  npass.min=npass.min, npass.max=npass.max, sigmaprop=1e4, 
                  sigmap=1e4, b0p=0, b1p=0, b2p=0, b3p=0, b4p=0, delta=0.5,
                  covs=covs)
-  class(result) <- "eflow_samp"
-  
+
   return(result)
 }

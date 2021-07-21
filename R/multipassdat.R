@@ -1,3 +1,9 @@
+#' Format sampling data for multipass package
+#' @description Format sampling data for multipass package
+#' @param sampdat list. Simulated sampling data (see ?eflowsim::samp).
+#' @return list.
+#' @export
+
 multipassdat <- function(sampdat){
   nsims <- nrow(sampdat$ypop)
   nyears <- ncol(sampdat$ypop)

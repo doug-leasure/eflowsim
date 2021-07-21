@@ -1,15 +1,45 @@
-# Generate an eflow population simulation
-sim <- function(covs=NULL, logcovs=T, nyears=25, nsim=1, densityType='k', Ninit=NA, growth.max=Inf, pop.max=1e6, extent=14, sigmaR=0.01, b0k=1e4, b1k=0, b2k=1000, b3k=0, b4k=0, b0phi=-1e4, b1phi=0, b2phi=0, b3phi=0, b4phi=0, b0r=1, b1r=0, b2r=0, b3r=0.5, b4r=0, rlag=c(0,0,0,0), dlag=c(0,0,0,0)){
+#' eFlow population simulation
+#' @description Generate an eflow population simulation
+#' @param covs data.frame. Stream-based covariates (see ?eflowsim::flow).
+#' @param logcovs logical. Log-transform covariates?
+#' @param nyears numeric. Number of years in population time-series.
+#' @param nsim numeric. Number of population simulations.
+#' @param densityType character. Define density-dependence using k or phi?
+#' @param Ninit numeric. Initial population size.
+#' @param growth.max numeric. Maximum intrinsic population growth rate (r).
+#' @param pop.max numeric. Maximum population size.
+#' @param extent numeric. Spatial extent of stream network (km).
+#' @param sigmaR numeric. Standard deviation in stochastic realized growth rates.
+#' @param b0k numeric. Intercept for regression of carrying capacity.
+#' @param b1k numeric. Effect of covariate 1 on carrying capacity.
+#' @param b2k numeric. Effect of covariate 2 on carrying capacity.
+#' @param b3k numeric. Effect of covariate 3 on carrying capacity.
+#' @param b4k numeric. Effect of covariate 4 on carrying capacity.
+#' @param b0phi numeric.  Intercept for regression of phi.
+#' @param b1phi numeric.  Effect of covariate 1 on phi.
+#' @param b2phi numeric.  Effect of covariate 1 on phi.
+#' @param b3phi numeric.  Effect of covariate 1 on phi.
+#' @param b4phi numeric.  Effect of covariate 1 on phi.
+#' @param b0r numeric. Intercept for regression of intrinsic growth rate.
+#' @param b1r numeric. Effect of covariate 1 on intrinsic growth rates.
+#' @param b2r numeric. Effect of covariate 2 on intrinsic growth rates.
+#' @param b3r numeric. Effect of covariate 3 on intrinsic growth rates.
+#' @param b4r numeric. Effect of covariate 4 on intrinsic growth rates.
+#' @param rlag numeric vector (length = 4). Time lag in years for each covariate on intrinsic growth rates.
+#' @param dlag numeric vector (length = 4). Time lag in years for each covariate on density-dependence.
+#' @return list.
+#' @export
+
+sim <- function(covs, logcovs=T, nyears=25, nsim=1, densityType='k', Ninit=NA, growth.max=Inf, pop.max=1e6, extent=14, 
+                sigmaR=0.01, b0k=1e4, b1k=0, b2k=1000, b3k=0, b4k=0, 
+                b0phi=-1e4, b1phi=0, b2phi=0, b3phi=0, b4phi=0, 
+                b0r=1, b1r=0, b2r=0, b3r=0.5, b4r=0, 
+                rlag=c(0,0,0,0), dlag=c(0,0,0,0)){
   #nyears=25; covs=NULL; nsim=1; growth.max=Inf; pop.max=1e6; sigmaR=0.01; b0k=1e4; b1k=0; b2k=1e3; b3k=0; b4k=0; b0r=1; b1r=0; b2r=0; b3r=0.5; b4r=-0; lag=c(0,0,0,0)
   
   lag <- max(rlag, dlag)
   
   nyears <- nyears + max(0, lag-1)
-  
-  if(is.null(covs)) {
-    data(flashy.dat)
-    covs <- flashy.dat
-  }
   
   if(logcovs) {
     covs[,c('mean','base','high','cv')] <- log(covs[,c('mean','base','high','cv')] + 1)
@@ -112,6 +142,5 @@ sim <- function(covs=NULL, logcovs=T, nyears=25, nsim=1, densityType='k', Ninit=
                    sigmaR=sigmaR, rlag=rlag, dlag=dlag, col=rainbow(nsim))
   }
   
-  class(result) <- "eflow_sim"
   return(result)
 }
