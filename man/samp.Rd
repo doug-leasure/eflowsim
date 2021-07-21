@@ -6,6 +6,7 @@
 \usage{
 samp(
   s.dat,
+  extent = 10,
   nsites = NULL,
   sitelength.min = 100,
   sitelength.max = 100,
@@ -24,11 +25,13 @@ samp(
 \arguments{
 \item{s.dat}{list. Simulated population. (see ?eflowsim::sim)}
 
+\item{extent}{numeric. Spatial extent of stream network (km).}
+
 \item{nsites}{numeric. Number of sample sites.}
 
-\item{sitelength.min}{numeric. Minimum length of a sample site.}
+\item{sitelength.min}{numeric. Minimum length of a sample site (m).}
 
-\item{sitelength.max}{numeric. Maximum length of a sample site.}
+\item{sitelength.max}{numeric. Maximum length of a sample site (m).}
 
 \item{npass.min}{numeric. Minimum number of removal sampling passes.}
 

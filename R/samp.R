@@ -1,9 +1,10 @@
 #' Population samples
 #' @description Sample from an eflowsim simulated population time series
 #' @param s.dat list. Simulated population. (see ?eflowsim::sim)
+#' @param extent numeric. Spatial extent of stream network (km).
 #' @param nsites numeric. Number of sample sites.
-#' @param sitelength.min numeric. Minimum length of a sample site.
-#' @param sitelength.max numeric. Maximum length of a sample site.
+#' @param sitelength.min numeric. Minimum length of a sample site (m). 
+#' @param sitelength.max numeric. Maximum length of a sample site (m).
 #' @param npass.min numeric. Minimum number of removal sampling passes.
 #' @param npass.max numeric. Maximum number of removal sampling passes.
 #' @param sigmaprop numeric. Standard deviation in proportion of total population extent sampled.
@@ -17,7 +18,7 @@
 #' @return list.
 #' @export
 
-samp <- function(s.dat, nsites=NULL, sitelength.min=100, sitelength.max=100, npass.min=3, npass.max=3, 
+samp <- function(s.dat, extent=10, nsites=NULL, sitelength.min=100, sitelength.max=100, npass.min=3, npass.max=3, 
                  sigmaprop=1, sigmap=1, b0p=0, b1p=0, b2p=0, b3p=0, b4p=0, delta=0){
   # s.dat=s1; extent=10; nsites=NULL; sitelength.min=100; sitelength.max=100; npass.min=3; npass.max=3; sigmaprop=0.01; sigmap=0.01; b0p=0; b1p=0; b2p=0; b3p=0; b4p=0; delta=0
   

@@ -1,10 +1,11 @@
-rm(list=ls())
-gc()
+# cleanup
+rm(list=ls()); gc(); cat("\014"); try(dev.off(), silent=T)
 
+# working directory
+setwd(file.path(dirname(rstudioapi::getSourceEditorContext()$path),'../wd'))
+
+# library
 library(eflowsim)
-
-# Set working directory
-setwd('c:/RESEARCH/2016 eFlow Simulations/wd')
 
 # Create flow time series from real gage
 f1 <- flow('10322000') #10249300 S Twin River  #10343500 Sagehen  #10329500 Martin Creek  #10318500 Humbolt near Elko  #10317500 Humbolt at Devils Gate (LCT)  #10322000 Maggie Creek (LCT)  #10321000 Humbolt near Carlin (LCT)  #07057500 North Fork (AR Stable) #07261500 Fouche La Favre (AR Flashy)
@@ -21,7 +22,7 @@ s1$extinct
 ploteffects(s1)
 
 plotflow(s1, simid=NA, type='summary')
-plot(s1, simid=NA, type='summary')
+plotsim(s1, simid=NA, type='summary')
 
 # simids <- c(1, sample(seq(1,s1$nsim), 1))
 # simids <- c(2)
@@ -31,7 +32,7 @@ plot(s1, simid=NA, type='summary')
 # Generate sample data from each simulation
 d1 <- samp(s1, nsites=rep(c(20),length=s1$nyears), 
            sitelength.min=50, sitelength.max=50, npass.min=3, npass.max=3, 
-           sigmaprop=0.1, sigmap=0.1, b0p=logit(0.5), b1p=0, b2p=0, b3p=0, b4p=0, delta=0)
+           sigmaprop=0.1, sigmap=0.1, b0p=boot::logit(0.5), b1p=0, b2p=0, b3p=0, b4p=0, delta=0)
 
 # Catch per unit effort
 cpue.toggle <- T
@@ -291,3 +292,4 @@ segments(x0=5, x1=8.4, y0=1.1)
 text(x=6.7, y=1.1, labels='Type III', pos=3, cex=1.1)
 
 par(mar=parmar)
+
